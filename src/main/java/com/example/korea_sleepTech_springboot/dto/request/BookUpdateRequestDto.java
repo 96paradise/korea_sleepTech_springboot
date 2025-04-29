@@ -4,12 +4,10 @@ import com.example.korea_sleepTech_springboot.entity.C_Category;
 import lombok.Getter;
 import lombok.Setter;
 
-// 책 생성 시 클라이언트가 서버에게 전달하는 데이터 (요청에 대한 데이터)
 @Getter
 @Setter
-public class BookCreateRequestDto {
-    private String writer;
-    private String title;
+public class BookUpdateRequestDto {
+    // 수정 가능한 책의 데이터: 내용, 카테고리
     private String content;
     private C_Category category;
 }
