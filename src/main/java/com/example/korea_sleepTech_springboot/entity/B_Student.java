@@ -23,11 +23,12 @@ public class B_Student {
     private Long id;
 
     // final 또는 @NonNull 사용 시 @RequiredConstructor 에서 매개변수로 지정
+    @Column(nullable = false)
     private String name;
 
     // 엔티티의 UNIQUE 제약 조건
     // 1) 컬럼 단위 명시*
-    @Column(unique = true) // JPA가 테이블을 만들 때 email 컬럼에 UNIQUE 제약을 자동 설정
+    @Column(unique = true, nullable = false) // JPA가 테이블을 만들 때 email 컬럼에 UNIQUE 제약을 자동 설정
     private String email;
 
     // protected B_Student() {}

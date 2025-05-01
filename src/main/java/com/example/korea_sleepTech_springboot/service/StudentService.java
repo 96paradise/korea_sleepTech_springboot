@@ -5,6 +5,7 @@ import com.example.korea_sleepTech_springboot.dto.request.StudentCreateRequestDt
 import com.example.korea_sleepTech_springboot.dto.request.StudentUpdateRequestDto;
 import com.example.korea_sleepTech_springboot.entity.B_Student;
 import com.example.korea_sleepTech_springboot.repository.StudentRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -125,10 +126,10 @@ public class StudentService {
 
             return responseDto;
 
-        } catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, // HTTP 상태 코드
-                    "Error occurred while fetching student", // 에러 메시지
+                    HttpStatus.CONFLICT, // HTTP 상태 코드
+                    "이미 등록된 이메일입니다.", // 에러 메시지
                     e // 예외 원인
             );
         }
@@ -144,7 +145,7 @@ public class StudentService {
         } catch (Exception e) {
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR, // HTTP 상태 코드
-                    "Error occurred while fetching student", // 에러 메시지
+                    "서버 오류: " + e.getMessage(), // 에러 메시지
                     e // 예외 원인
             );
         }
