@@ -7,8 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PostService {
-    public ResponseDto<PostDetailResponseDto> createPost(@Valid PostCreateRequestDto dto) {
-        return null;
-    }
+public interface PostService {
+    public ResponseDto<PostDetailResponseDto> createPost(@Valid PostCreateRequestDto dto);
 }
