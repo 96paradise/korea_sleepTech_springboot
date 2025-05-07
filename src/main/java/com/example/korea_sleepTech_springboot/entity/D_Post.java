@@ -50,4 +50,26 @@ public class D_Post {
      * */
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<D_Comment> comments = new ArrayList<>();
+
+    /*
+     * 연관 관계 편의 메서드
+     *   : Comment를 Post에 추가할 때 사용
+     *   - comments 리스트에 Comment를 추가, 해당 Comment의 post 필드에 현재 Post 객체를 설정
+     *
+     * @param: comment 추가할 D_Comment 객체
+     * */
+    public void addComment(D_Comment comment) {
+        this.comments.add(comment);
+        comment.setPost(this); // Comment 객체에 현재의 Post를 설정
+    }
+
+    /*
+     * 연관 관계 편의 메서드
+     *   : Comment를 Post에 제거할 때 사용
+     *   - comments 리스트에서 Comment를 제거, 해당 Comment의 post 필드를 null로 설정
+     * */
+    public void removeComment(D_Comment comment) {
+        this.comments.remove(comment);
+        comment.setPost(null); // Comment 객체의 연관 관계 해제
+    }
 }
