@@ -5,6 +5,7 @@ import com.example.korea_sleepTech_springboot.dto.request.PostCreateRequestDto;
 import com.example.korea_sleepTech_springboot.dto.request.PostUpdateRequestDto;
 import com.example.korea_sleepTech_springboot.dto.response.PostDetailResponseDto;
 import com.example.korea_sleepTech_springboot.dto.response.PostListResponseDto;
+import com.example.korea_sleepTech_springboot.dto.response.PostWithCommentCountResponseDto;
 import com.example.korea_sleepTech_springboot.dto.response.ResponseDto;
 import com.example.korea_sleepTech_springboot.service.PostService;
 import jakarta.validation.Valid;
@@ -82,4 +83,17 @@ public class PostController {
         ResponseDto<List<PostListResponseDto>> response = postService.searchPostsByTitle(keyword);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    // 8) 댓글이 가장 많은 상위 5개의 게시글 조회
+    @GetMapping("/top-comments")
+    public ResponseEntity<ResponseDto<List<PostWithCommentCountResponseDto>>> getTop5PostsByComments() {
+        ResponseDto<List<PostWithCommentCountResponseDto>> response = postService.getTop5PostsByComments();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+
+
+
+
+
 }

@@ -3,10 +3,7 @@ package com.example.korea_sleepTech_springboot.service.implementations;
 import com.example.korea_sleepTech_springboot.common.ResponseMessage;
 import com.example.korea_sleepTech_springboot.dto.request.PostCreateRequestDto;
 import com.example.korea_sleepTech_springboot.dto.request.PostUpdateRequestDto;
-import com.example.korea_sleepTech_springboot.dto.response.CommentResponseDto;
-import com.example.korea_sleepTech_springboot.dto.response.PostDetailResponseDto;
-import com.example.korea_sleepTech_springboot.dto.response.PostListResponseDto;
-import com.example.korea_sleepTech_springboot.dto.response.ResponseDto;
+import com.example.korea_sleepTech_springboot.dto.response.*;
 import com.example.korea_sleepTech_springboot.entity.D_Post;
 import com.example.korea_sleepTech_springboot.repository.PostRepository;
 import com.example.korea_sleepTech_springboot.service.PostService;
@@ -180,6 +177,28 @@ public class PostServiceImpl implements PostService {
                         .title(post.getTitle())
                         .content(post.getContent())
                         .author(post.getAuthor())
+                        .build())
+                .collect(Collectors.toList());
+
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, responseDtos);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseDto<List<PostWithCommentCountResponseDto>> getTop5PostsByComments() {
+        List<PostWithCommentCountResponseDto> responseDtos = null;
+
+        List<Object[]> results = postRepository.findTop5ByOrderByCommentsSizeDesc();
+
+        responseDtos = results.stream()
+                .map(row -> PostWithCommentCountResponseDto.builder()
+                        // JPA 데이터 반환이 Object[] 타입
+                        // : 내부의 데이터는 Object로 명시 >> 각 타입으로 명시적 형 변환(강제 형 변환)
+                        .id( ((Number) row[0]).longValue() )
+                        .title((String) row[1])
+                        .content((String) row[2])
+                        .author((String) row[3])
+                        .commentCount( ((Number) row[4]).intValue() )
                         .build())
                 .collect(Collectors.toList());
 
