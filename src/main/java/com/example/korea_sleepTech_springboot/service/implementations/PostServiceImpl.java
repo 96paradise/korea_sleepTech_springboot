@@ -147,4 +147,42 @@ public class PostServiceImpl implements PostService {
 
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, null);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseDto<List<PostListResponseDto>> getPostsByAuthor(String author) {
+        List<PostListResponseDto> responseDtos = null;
+
+        List<D_Post> posts = postRepository.findByAuthor(author);
+
+        responseDtos = posts.stream()
+                .map(post -> PostListResponseDto.builder()
+                        .id(post.getId())
+                        .title(post.getTitle())
+                        .content(post.getContent())
+                        .author(post.getAuthor())
+                        .build())
+                .collect(Collectors.toList());
+
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, responseDtos);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseDto<List<PostListResponseDto>> searchPostsByTitle(String keyword) {
+        List<PostListResponseDto> responseDtos = null;
+
+        List<D_Post> posts = postRepository.findByTitleIgnoreCaseContaining(keyword);
+
+        responseDtos = posts.stream()
+                .map(post -> PostListResponseDto.builder()
+                        .id(post.getId())
+                        .title(post.getTitle())
+                        .content(post.getContent())
+                        .author(post.getAuthor())
+                        .build())
+                .collect(Collectors.toList());
+
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, responseDtos);
+    }
 }

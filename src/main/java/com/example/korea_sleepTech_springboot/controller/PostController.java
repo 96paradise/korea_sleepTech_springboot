@@ -65,4 +65,21 @@ public class PostController {
         ResponseDto<Void> response = postService.deletePost(id);
         return ResponseEntity.noContent().build();
     }
+
+    // =========================================================== //
+    // PostController의 메인 경로: "/api/v1/posts"
+
+    // 6) 특정 작성자의 모든 게시글 조회
+    @GetMapping("/author/{author}")
+    public ResponseEntity<ResponseDto<List<PostListResponseDto>>> getPostsByAuthor(@PathVariable String author) {
+        ResponseDto<List<PostListResponseDto>> response = postService.getPostsByAuthor(author);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    // 7) 특정 키워드로 제목 검색
+    @GetMapping("/search")
+    public ResponseEntity<ResponseDto<List<PostListResponseDto>>> searchPostsByTitle(@RequestParam String keyword) {
+        ResponseDto<List<PostListResponseDto>> response = postService.searchPostsByTitle(keyword);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
