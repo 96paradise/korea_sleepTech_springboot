@@ -40,7 +40,7 @@ public class AuthController {
 
     // 2) 로그인
     // - HTTP 메서드: POST
-    // - URI 경로: /signin
+    // - URI 경로: /login
     // @Params: UserSignInRequestDto
     // @Return: UserSignInResponseDto
 
