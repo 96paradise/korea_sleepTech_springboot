@@ -2,8 +2,10 @@ package com.example.korea_sleepTech_springboot.config;
 
 import com.example.korea_sleepTech_springboot.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -16,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
@@ -33,7 +36,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 // : 해당 클래스가 Spring의 설정 클래스로 사용됨을 명시 (Spring이 관리하는 객체를 생성하는 데 사용)
 @EnableWebSecurity
 // : Spring Security의 웹 보완을 활성화
-@RequiredArgsConstructor
 public class WebSecurityConfig {
 
     /*
@@ -42,7 +44,9 @@ public class WebSecurityConfig {
      * : UsernamePasswordAuthenticationFilter 이전에 동작
      *       - JWT 토큰이 유효한지 검사하여 사용자를 인증
      * */
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    @Lazy
+    @Autowired // 필드 주입
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     /*
      * ===== corsFilter =====
@@ -57,7 +61,7 @@ public class WebSecurityConfig {
      * - CORS 관련 설정을 필터링 해주는 역할
      * */
     @Bean
-    public CorsFilter corsFilter(CorsFilter corsFilter) {
+    public CorsFilter corsFilter() {
         // 1. UrlBasedCorsConfigurationSource
         // : CORS 정책을 URL 기반으로 "관리하는 객체"
         // - 특정 경로에 따라 CORS 정책을 달리 적용 가능
@@ -102,7 +106,6 @@ public class WebSecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(withDefaults())
-
                 // 요청 인증 및 권한 부여 설정
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers( // : 특정 요청과 일치하는 url에 대한 엑세스

@@ -11,10 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(ApiMappingPattern.AUTH_API)
@@ -34,6 +31,7 @@ public class AuthController {
     // @Return: UserSignUpResponseDto
     @PostMapping(POST_SIGN_UP)
     public ResponseEntity<ResponseDto<UserSignUpResponseDto>> signup(@Valid @RequestBody UserSignUpRequestDto dto) {
+        System.out.println("=== 회원가입 요청 도착 ===");
         ResponseDto<UserSignUpResponseDto> response = authService.signup(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

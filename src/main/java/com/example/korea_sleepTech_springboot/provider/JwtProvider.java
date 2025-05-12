@@ -37,6 +37,10 @@ public class JwtProvider {
     private final Key key; // JWT 서명에 사용할 암호키 저장 변수
     private final int jwtExpirationMs;
 
+    public int getExpiration() {
+        return jwtExpirationMs;
+    }
+
     public JwtProvider(
             @Value("${jwt.secret}") String secret,
             @Value("${jwt.expiration}") int jwtExpirationMs // JWT 토큰의 만료 시간을 저장
