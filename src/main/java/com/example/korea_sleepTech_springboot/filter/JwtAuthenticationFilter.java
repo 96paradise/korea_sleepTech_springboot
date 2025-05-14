@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -93,6 +92,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void setAuthenticationContext(HttpServletRequest request, String username, Set<String> roles) {
 
         List<GrantedAuthority> authorities = roles.stream()
+                // JWT 로그인 방식에서 사용자가 요청을 보낼 때
+                // , 토큰에 담긴 roles 정보를 hasRole("")과 매칭시키기 위함
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
 
