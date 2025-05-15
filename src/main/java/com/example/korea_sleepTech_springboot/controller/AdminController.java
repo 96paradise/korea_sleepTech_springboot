@@ -22,7 +22,7 @@ public class AdminController {
     // == AdminController mapping pattern == //
     private static final String PUT_AUTHORITY_TO_ADMIN = "/promote";
 
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(PUT_AUTHORITY_TO_ADMIN)
     public ResponseEntity<ResponseDto<PromoteToAdminResponseDto>> promoteUserToAdmin(
             @RequestBody PromoteToAdminRequestDto dto
@@ -30,5 +30,4 @@ public class AdminController {
         ResponseDto<PromoteToAdminResponseDto> response = adminService.promoteUserToAdmin(dto);
         return ResponseEntity.ok(response);
     }
-
 }
