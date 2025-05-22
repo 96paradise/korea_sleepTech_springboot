@@ -37,4 +37,4 @@ out/
 .vscode/
 
 # secret 설정 파일 무시
-/src/main/resources/appication-secret.properties
+/src/main/resources/application-secret.properties

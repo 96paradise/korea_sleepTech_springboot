@@ -1,8 +1,9 @@
 package com.example.korea_sleepTech_springboot.service;
 
+import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 
 public interface MailService {
-    Mono<String> sendSimpleMessage(String email);
-    Mono<String> ver
+    Mono<ResponseEntity<String>> sendSimpleMessage(String email);
+    Mono<ResponseEntity<String>> verifyEmail(String token);
 }
