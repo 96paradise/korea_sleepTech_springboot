@@ -1,5 +1,10 @@
 package com.example.korea_sleepTech_springboot.teamproject.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
